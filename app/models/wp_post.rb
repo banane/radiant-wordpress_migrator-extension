@@ -1,14 +1,17 @@
 class WpPost < ActiveRecord::Base
   include ActionView::Helpers::TextHelper
   self.abstract_class = true
-  establish_connection "wordpress"
+  establish_connection Radiant::Config['wpm.db_profilename']
   set_table_name 'wp_posts'
   set_primary_key 'ID'
   
   belongs_to :author, :class_name => 'WpUser', :foreign_key => 'post_author'
   belongs_to :parent, :class_name => 'WpPost', :foreign_key => 'post_parent'
   has_many :wp_post2cats, :foreign_key => 'post_id'
+  has_many :wp_post2terms, :foreign_key => 'post_id'  
+  has_many :terms, :through => :wp_post2terms, :source => :wp_term
   has_many :categories, :through => :wp_post2cats, :source => :wp_category
+
   has_many :wp_post2tags, :foreign_key => 'post_id'
   has_many :meta_tags, :through => :wp_post2tags, :source => :wp_tag
   

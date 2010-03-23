@@ -2,19 +2,25 @@
 # require_dependency 'application'
 
 class WordpressMigratorExtension < Radiant::Extension
-  version "1.0"
+  version "1.1"
   description "Tools to migrate from a WordPress database"
   url "http://saturnflyer.com"
-
-  class MissingDependency < StandardError; end
   
-  def activate
-    raise WordpressMigratorExtension::MissingDependency.new('You must have the ability to tag your pages with an extension such as the tags extension.') unless Page.new.respond_to?(:tags)
-    # admin.tabs.add "Wordpress Migrator", "/admin/wordpress_migrator", :after => "Layouts", :visibility => [:all]
+  class MissingDependency < StandardError; end
+ 
+  define_routes do |map|
+    map.with_options :controller => 'wordpress_migrator' do |t|
+      t.wordpress_migrator '/admin/wordpress_migrator', :action => "edit"
+    end
+  end
+  
+  def activate 
+    tab "Content" do
+      add_item("WordPress Migrator", "/admin/wordpress_migrator")
+    end
   end
   
   def deactivate
-    # admin.tabs.remove "Wordpress Migrator"
   end
   
 end

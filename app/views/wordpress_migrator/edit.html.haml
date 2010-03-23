@@ -1,0 +1,33 @@
+%h1 
+  Migrate Database
+%p 
+  First, prepare your wordpress database. If it's from a backup file, run ...
+  %p.code -u[username] -p[password] [databasename] < [backup file] 
+  %p ...to restore it, then in your database.yml file create an entry for your wordpress database. Example:
+  %p.code
+    %pre 
+      blog:
+      adapter: mysql
+      database: blah_blog
+      username: anna
+      password: blahblah
+      socket: /tmp/mysql.sock
+  %p "blog" is the database connection name.
+- form_tag wordpress_migrator_path do
+  %p
+    %label{:for => 'db_profilename'} Database connection name
+    = text_field_tag 'db_profilename', @config['wpm.db_profilename'] , :size => 30
+  %p 
+    %label{:for => 'wp_version'} WordPress version (optional)
+    %p To find the wordpress version, Go to your dashboard, in the "right now" box there is "You are using Wordpress x.x.x".
+    = text_field_tag 'wp_version', @config['wpm.wp_version'], :size => 30
+  %p.buttons
+    = submit_tag 'Save and Run Migration'
+- content_for :page_css do
+  :sass
+    p.code, pre
+      background-color: #ffffff
+      color: #000000
+      width: 700px
+      font-family: courier
+      padding:12px

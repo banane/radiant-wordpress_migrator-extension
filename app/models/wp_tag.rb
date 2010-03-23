@@ -1,7 +1,8 @@
 class WpTag < ActiveRecord::Base
   self.abstract_class = true
-  establish_connection "wordpress"
+  establish_connection Radiant::Config['wpm.db_profilename']
   set_table_name 'wp_tags'
+  set_wp25_table_name 'wp_terms'
   set_primary_key 'tag_ID'
   
   has_many :wp_post2cat, :foreign_key => 'tag_id'

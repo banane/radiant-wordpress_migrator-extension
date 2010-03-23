@@ -1,6 +1,6 @@
 class WpUser < ActiveRecord::Base
   self.abstract_class = true
-  establish_connection "wordpress"
+  establish_connection Radiant::Config['wpm.db_profilename']
   set_table_name 'wp_users'
   set_primary_key 'ID'
   

@@ -1,6 +1,34 @@
 = Wordpress Migrator
 
-Currently only basic models are provided for WordPress tables
+Posts, users, terms/categories, and tags are mapped over from WordPress to Radiant-appropriate tables.
+
+Required extensions (basic blogging extensions):
+- tags
+- comments
+
+**** INSTALLATION
+
+1) git clone radiant/saturnflyer/radiant-wordpress-migrator-extension
+
+
+2) add to your database.yml an entry for your wordpress blog database
+1.a. If it's a backuped file, restore it to a new database:
+mysql -u[username] -p[password] [databasename] > [backupfilename]
+1.b. If it's already a netowrked or locally accessible database, enter that information in the database.yml
+
+3) Restart server
+
+4) Go to admin/migrate wordpress and enter in the name of the database profile name
+
+5) If you know it, enter the wordpress version number (optional)
+
+6) Run migrate!
+
+
 
 Built by Saturn Flyer http://www.saturnflyer.com
 Supported by Ignite Social Media http://www.ignitesocialmedia.com
+
+Contributors:
+banane/Anna Billstrom
+Iiska
